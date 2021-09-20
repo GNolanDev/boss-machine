@@ -1,6 +1,26 @@
 # Boss Machine
 
-## Project Overview
+## Aim
+To create the necessary functions and set up the server/router options so that all api calls work and tests pass.
+Files provided by Codecademy, project brief is detailed below.
+
+## Technologies
+Express.js
+
+## Requirements
+Requires Node.js environment.
+Download the folder and run 'npm install', followed by 'node server.js' wihch should result in a server instance listening on :4001.
+Go to 'localhost:4001' in a browser to see the application.
+Run 'npm run test' to execute the test suite.
+
+## Contact
+Created by GNolanDev@gmail.com - comments gratefully received!
+
+*The remaining text is direct from Codecademy:*  
+<br><br><br>
+***
+
+### Project Overview
 
 In this project, you will create an entire API to serve information to a Boss Machine, a unique management application for today's most accomplished (evil) entrepreneurs. You will create routes to manage your 'minions', your brilliant 'million dollar ideas', and to handle all the annoying meetings that keep getting added to your busy schedule.
 
@@ -11,7 +31,7 @@ You can view a video demonstration of the final app here:
  The markdown processor does not support the video tag.
 </video>
 
-## How to Begin
+### How to Begin
 
 To start, download the starting code for this project <a href="https://s3.amazonaws.com/codecademy-content/PRO/skill-paths/backend-javascript/projects/boss-machine/project-4-boss-machine-start.zip" target="_blank">here</a>. After downloading the zip folder, double click it to uncompress it and access the contents.
 
@@ -19,11 +39,11 @@ Once you have the project downloaded, you'll need to run some terminal commands 
 
 To see the application in its initial, non-working state, simply open **index.html** in a web browser. You should use [Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) (at least version 60) or [Firefox](https://www.mozilla.org/en-US/firefox/new/) (at least version 55). The links above will let you download the latest release of either browser if you do not have it or are unsure of which version you're running.
 
-## Implementation Details
+### Implementation Details
 
 To complete the project, you will need to complete code in a few sections of the project. Generally, you will not have to touch anything inside the **browser**, **public**, or **node_modules** folders unless you know some React and HTML/CSS and want to customize the look of the Boss Machine. Before doing any of that, however, let's focus on getting the API server up and running:
 
-### Server Boilerplate
+#### Server Boilerplate
 
 In **server.js**, you will see some boilerplate code, but the server is missing key functionality to allow it to run. You must:
 
@@ -34,12 +54,12 @@ In **server.js**, you will see some boilerplate code, but the server is missing 
 
 Take note of the comments in **server.js**, as your code needs to fit into specific places around the existing boilerplate.
 
-### API Routes
+#### API Routes
 
 - Your routes should live inside the **server** folder. The file and router structure is up to you, the testing suite will only test whether your API endpoints work as intended, not how you nest your code!
 - Your 'database' exists in **server/db.js**. The beginning database will be seeded every time the server is restarted. There is more information on working with the database and the helper functions it exports below.
 
-#### Routes Required
+##### Routes Required
 
 - `/api/minions`
   - GET /api/minions to get an array of all minions.
@@ -62,7 +82,7 @@ For all `/api/minions` and `/api/ideas routes`, any POST or PUT requests will se
 
 For `/api/meetings` POST route, no request body is necessary, as meetings are generated automatically by the server upon request. Use the provided `createMeeting` function exported from **db.js** to create a new meeting object.
 
-### Working with the 'Database'
+#### Working with the 'Database'
 
 The **server/db.js** file exports helper functions for working with the database arrays. The goal of this project is for you to focus on Express routes and not worry about how the database works under the hood. These functions always take at least one argument, and the first argument is always a string representing the name of the database model: `'minions'`, `'ideas'`, `'meetings'`, or `'work'`.
 
@@ -90,7 +110,7 @@ The **server/db.js** file exports helper functions for working with the database
 
 - Takes only the single argument for model name. Deletes all elements from the proper model and returns a new, empty array. You will only need to use this function for a /api/meetings route.
 
-#### Schemas
+##### Schemas
 
 - Minion:
   - id: string
@@ -111,11 +131,11 @@ The **server/db.js** file exports helper functions for working with the database
 
 Take note that many values that could be numbers are in fact strings. Since we are writing an API, we can't trust that data is always provided by a client. You may need to transform between String and Number JavaScript types in order to provide full functionality in your API.
 
-### Custom Middleware
+#### Custom Middleware
 
 - You will create a custom middleware function `checkMillionDollarIdea` that will come in handy in some /api/ideas routes. Write this function in the **server/checkMillionDollarIdea.js** file. This function will make sure that any new or updated ideas are still worth at least one million dollars! The total value of an idea is the product of its `numWeeks` and `weeklyRevenue` properties.
 
-### Bonus
+#### Bonus
 
 As a bonus, you may implement routes to allow bosses to add and remove work from their minions' backlogs.
 
@@ -139,7 +159,7 @@ To work on the bonus with tests, you will need to remove their pending status. O
 
 In order to fully implement these routes, the database helper functions may not provide all the functionality that you need, and you may need to use router parameters or other methods to attach the `minionId` properties correctly and handle the edge cases property. Good luck!
 
-## Testing
+### Testing
 
 A testing suite has been provided for you, checking for all essential functionality and
 edge cases.
