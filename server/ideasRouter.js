@@ -1,6 +1,6 @@
 const express = require('express');
 const ideasRouter = express.Router();
-const { getAllFromDatabase, addToDatabase, getFromDatabaseById, updateInstanceInDatabase } = require('./db');
+const { getAllFromDatabase, addToDatabase, getFromDatabaseById, updateInstanceInDatabase, deleteFromDatabasebyId } = require('./db');
 
 ideasRouter.param('ideaId', (req, res, next, ideaId) => {
   req.ideaId = ideaId;
@@ -38,7 +38,7 @@ ideasRouter.post('/', (req, res, next) => {
     }
   try {
     const response = addToDatabase('ideas', newIdea);
-    res.send(response);
+    res.status(201).send(response);
   } catch {
     res.status(400).send('caught error when creating');
   }
@@ -46,6 +46,10 @@ ideasRouter.post('/', (req, res, next) => {
 
 ideasRouter.put('/:ideaId', (req, res, next) => {
   // update single idea by id
+  if ((isNaN(parseFloat(req.ideaId)) || !isFinite(req.ideaId))) {
+    res.sendStatus(404);
+    return;
+  }
   const replaceIdea = req.body;
   req.body.id = req.ideaId;
   if (
@@ -57,24 +61,28 @@ ideasRouter.put('/:ideaId', (req, res, next) => {
       && (!isNaN(parseFloat(replaceIdea.numWeeks)) && isFinite(replaceIdea.numWeeks))
       && (!isNaN(parseFloat(replaceIdea.weeklyRevenue)) && isFinite(replaceIdea.weeklyRevenue))
     )) {
-      res.status(400).send('did not pass validation');
+      res.status(404).send('did not pass validation');
       return;
     }
   try {
     const response = updateInstanceInDatabase('ideas', replaceIdea);
     res.send(response);
   } catch {
-    res.status(400).send('caught error when updating');
+    res.status(404).send('caught error when updating');
   }
 });
 
 ideasRouter.delete('/:ideaId', (req, res, next) => {
   // delete single idea by id
+  if ((isNaN(parseFloat(req.ideaId)) || !isFinite(req.ideaId))) {
+    res.sendStatus(404);
+    return;
+  }
   const deleteResult = deleteFromDatabasebyId('ideas', req.ideaId);
   if (deleteResult) {
-    res.sendStatus(200);
-  } else {
     res.sendStatus(204);
+  } else {
+    res.sendStatus(404);
   }
 });
 

@@ -41,7 +41,7 @@ minionsRouter.post('/', (req, res, next) => {
     }
   try {
     const response = addToDatabase('minions', newMinion);
-    res.send(response);
+    res.status(201).send(response);
   } catch {
     res.status(400).send('caught error when creating');
   }
@@ -49,6 +49,10 @@ minionsRouter.post('/', (req, res, next) => {
 
 minionsRouter.put('/:minionId', (req, res, next) => {
   // update single minion by id
+  if ((isNaN(parseFloat(req.minionId)) || !isFinite(req.minionId))) {
+    res.sendStatus(404);
+    return;
+  }
   const replaceMinion = req.body;
   req.body.id = req.minionId;
   if (
@@ -60,24 +64,28 @@ minionsRouter.put('/:minionId', (req, res, next) => {
       && (typeof replaceMinion.id === 'string' || replaceMinion.id instanceof String)
       && (!isNaN(parseFloat(replaceMinion.salary)) && isFinite(replaceMinion.salary))
     )) {
-      res.status(400).send('did not pass validation');
+      res.status(404).send('did not pass validation');
       return;
     }
   try {
     const response = updateInstanceInDatabase('minions', replaceMinion);
     res.send(response);
   } catch {
-    res.status(400).send('caught error when updating');
+    res.status(404).send('caught error when updating');
   }
 });
 
 minionsRouter.delete('/:minionId', (req, res, next) => {
   // delete single minion by id
+  if ((isNaN(parseFloat(req.minionId)) || !isFinite(req.minionId))) {
+    res.sendStatus(404);
+    return;
+  }
   const deleteResult = deleteFromDatabasebyId('minions', req.minionId);
   if (deleteResult) {
-    res.sendStatus(200);
-  } else {
     res.sendStatus(204);
+  } else {
+    res.sendStatus(404);
   }
 });
 
