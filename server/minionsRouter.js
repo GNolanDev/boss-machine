@@ -50,6 +50,7 @@ minionsRouter.post('/', (req, res, next) => {
 minionsRouter.put('/:minionId', (req, res, next) => {
   // update single minion by id
   const replaceMinion = req.body;
+  req.body.id = req.minionId;
   if (
     !('id' in replaceMinion && 'weaknesses' in replaceMinion && 'name' in replaceMinion && 'title' in replaceMinion && 'salary' in replaceMinion)
     ||
