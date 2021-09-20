@@ -1,6 +1,6 @@
 const express = require('express');
 const minionsRouter = express.Router();
-const { getAllFromDatabase, getFromDatabaseById, addToDatabase } = require('./db');
+const { getAllFromDatabase, getFromDatabaseById, addToDatabase, updateInstanceInDatabase, deleteFromDatabasebyId } = require('./db');
 
 minionsRouter.param('minionId', (req, res, next, minionId) => {
   req.minionId = minionId;
@@ -49,10 +49,35 @@ minionsRouter.post('/', (req, res, next) => {
 
 minionsRouter.put('/:minionId', (req, res, next) => {
   // update single minion by id
+  const replaceMinion = req.body;
+  if (
+    !('id' in replaceMinion && 'weaknesses' in replaceMinion && 'name' in replaceMinion && 'title' in replaceMinion && 'salary' in replaceMinion)
+    ||
+    !((typeof replaceMinion.weaknesses === 'string' || replaceMinion.weaknesses instanceof String)
+      && (typeof replaceMinion.name === 'string' || replaceMinion.name instanceof String)
+      && (typeof replaceMinion.title === 'string' || replaceMinion.title instanceof String)
+      && (typeof replaceMinion.id === 'string' || replaceMinion.id instanceof String)
+      && (!isNaN(parseFloat(replaceMinion.salary)) && isFinite(replaceMinion.salary))
+    )) {
+      res.status(400).send('did not pass validation');
+      return;
+    }
+  try {
+    const response = updateInstanceInDatabase('minions', replaceMinion);
+    res.send(response);
+  } catch {
+    res.status(400).send('caught error when updating');
+  }
 });
 
 minionsRouter.delete('/:minionId', (req, res, next) => {
   // delete single minion by id
+  const deleteResult = deleteFromDatabasebyId('minions', req.minionId);
+  if (deleteResult) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(204);
+  }
 });
 
 
