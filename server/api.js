@@ -1,9 +1,9 @@
 const express = require('express');
 const apiRouter = express.Router();
 
-const minionsRouter = require('./minionsRouter');
-const ideasRouter = require('./ideasRouter');
-const meetingsRouter = require('./meetingsRouter');
+const minionsRouter = require('./minionsRouter.js');
+const ideasRouter = require('./ideasRouter.js');
+const meetingsRouter = require('./meetingsRouter.js');
 
 apiRouter.use('/minions/', minionsRouter);
 apiRouter.use('/ideas/', ideasRouter);
