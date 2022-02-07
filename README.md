@@ -1,24 +1,29 @@
 # Boss Machine
 
 ## Aim
+
 To create the necessary functions and set up the server/router options so that all api calls work and tests pass.
 Files provided by Codecademy, project brief is detailed below.
 
 ## Technologies
+
 Express.js
 
 ## Requirements
+
 Requires Node.js environment.
-Download the folder and run 'npm install', followed by 'node server.js' wihch should result in a server instance listening on :4001.
+Download the folder and run 'npm install', followed by 'node server.js' which should result in a server instance listening on :4001.
 Go to 'localhost:4001' in a browser to see the application.
 Run 'npm run test' to execute the test suite.
 
 ## Contact
+
 Created by GNolanDev@gmail.com - comments gratefully received!
 
-*The remaining text is direct from Codecademy:*  
+_The remaining text is direct from Codecademy:_  
 <br><br><br>
-***
+
+---
 
 ### Project Overview
 
