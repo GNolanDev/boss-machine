@@ -9,7 +9,7 @@ Express.js
 
 ## Requirements
 Requires Node.js environment.
-Download the folder and run 'npm install', followed by 'node server.js' wihch should result in a server instance listening on :4001.
+Download the folder and run 'npm install', followed by 'node server.js' which should result in a server instance listening on :4001.
 Go to 'localhost:4001' in a browser to see the application.
 Run 'npm run test' to execute the test suite.
 
